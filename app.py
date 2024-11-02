@@ -83,6 +83,9 @@ class ClothingDetail(Resource):
 # Registering resources with endpoints
 api.add_resource(ClothingList, "/clothing")
 api.add_resource(ClothingDetail, "/clothing/<int:item_id>")
+api.add_resource(AddBook, '/clothing/add')
+api.add_resource(UpdateBook, '/clothing/update/<string:item_id>')
+api.add_resource(DeleteBook, '/clothing/delete/<string:item_id>')
 
 if __name__ == "__main__":
     app.run(debug=True)
