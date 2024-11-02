@@ -28,7 +28,9 @@ def get_new_id():
 class ClothingList(Resource):
     def get(self):
         return {"error": False, "message": "success", "count": len(clothing_items), "items": clothing_items}
-    
+
+# AddClothing resource
+class AddClothing(Resource):
     def post(self):
         data = request.json
         new_id = get_new_id()
@@ -54,7 +56,9 @@ class ClothingDetail(Resource):
         if not item:
             return {"error": True, "message": "Item not found"}, 404
         return {"error": False, "message": "success", "item": item}
-    
+
+# UpdateClothing resource
+class UpdateClothing(Resource):
     def put(self, item_id):
         data = request.json
         item = next((item for item in clothing_items if item["id"] == item_id), None)
@@ -73,7 +77,9 @@ class ClothingDetail(Resource):
         })
         
         return {"error": False, "message": "Item updated successfully", "item": item}
-    
+
+# DeleteClothing resource
+class DeleteClothing(Resource):
     def delete(self, item_id):
         global clothing_items
         clothing_items = [item for item in clothing_items if item["id"] != item_id]
@@ -81,12 +87,11 @@ class ClothingDetail(Resource):
         return {"error": False, "message": "Item deleted successfully"}
 
 # Registering resources with endpoints
-api.add_resource(ClothingList, "/clothing")
-api.add_resource(ClothingDetail, "/clothing/<int:item_id>")
-api.add_resource(AddClothing, '/clothing/add')
-api.add_resource(UpdateClothing, '/clothing/update/<string:item_id>')
-api.add_resource(DeleteClothing, '/clothing/delete/<string:item_id>')
+api.add_resource(ClothingList, "/clothing")  # Untuk GET
+api.add_resource(AddClothing, '/clothing/add')  # Untuk POST
+api.add_resource(ClothingDetail, "/clothing/<int:item_id>")  # Untuk GET
+api.add_resource(UpdateClothing, '/clothing/update/<int:item_id>')  # Untuk PUT
+api.add_resource(DeleteClothing, '/clothing/delete/<int:item_id>')  # Untuk DELETE
 
 if __name__ == "__main__":
     app.run(debug=True)
-
